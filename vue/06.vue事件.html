@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 400px;
+            height: 400px;
+            background-color: aliceblue;
+        }
+        #app>div {
+            width: 300px;
+            height: 300px;
+            background-color:  pink;
+        }
+        #app>div>div {
+            width: 200px;
+            height: 200px;
+            background-color: #1de6a9;
+        }
+        #app>div>div>div {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(197, 143, 28);
+        }
+        #app>div>div>div>div {
+            width: 50px;
+            height: 50px;
+            background-color: #d2e42f;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-on:click.self="fn1">阿漆
+            <div v-on:click.stop="fn2">文西
+                <div @click.once.stop="fn3">李香琴
+                    <div @click.once="fn4">李香兰</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+            
+            },
+            methods:{
+                fn1(){
+                    console.log("力拔山兮气盖世")
+                },
+                fn2(){
+                    console.log("时不利兮骓不逝")
+                },
+                fn3(){
+                    console.log("骓不逝兮可奈何")
+                },
+                fn4(){
+                    console.log("虞兮虞兮奈若何")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

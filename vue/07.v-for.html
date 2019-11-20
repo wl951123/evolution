@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ol>
+            <li v-for="item in text">{{item}}</li>
+            <li v-for="item in text" v-text="item"></li>
+            <li v-for="item,i in text">{{item}}{{i}}</li>
+            <li v-for="item,i in text" :key="item.id">{{item}}{{i}}</li>
+        </ol>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data :{
+                text : [
+                    "力拔山兮气盖世,",
+                    "时不利兮骓不逝。",
+                    "骓不逝兮可奈若,",
+                    "虞兮虞兮奈若何。"
+                ]
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+</html>
