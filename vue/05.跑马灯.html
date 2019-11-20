@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+        <p v-text="message"></p>
+        <button @click="fn1">点击</button>
+        <button @click="fn2">点击</button>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                message: "玫瑰，十年不见，还是这么漂亮！",
+                timer: null
+            },
+            methods: {
+                fn1() {
+                    this.timer = setInterval(() => {
+                        this.message = this.message.substring(1) + this.message[0]
+                    }, 500)
+                },
+                fn2(){
+                    clearInterval(this.timer)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

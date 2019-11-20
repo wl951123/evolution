@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- vue的指令 -->
+        <p :title="1+1==2?tips:time">{{message.replace("十","八")}} {{tips}}</p>
+        <!-- v-text 不能识别标签 -->
+        <p v-text="content"></p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // 用户是不安全的 xss攻击 跨站脚本工具
+        // 能够执行一段恶意js代码
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                name: "凌凌漆",
+                tips: "等了十年，我原以为国家早把我忘了",
+                message: "玫瑰，十年不见，还是这么漂亮！",
+                time: new Date().toLocaleString(),
+                content:"夫人之一身,皆具天地之理"
+            }
+        })
+    </script>
+</body>
+</html>
