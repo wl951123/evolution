@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #canvas {
+            background-color: white
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500">
+        对不起,您的浏览器不支持canvas
+        请尝试升级浏览器
+    </canvas>
+    <script>
+        //js操作canvas
+        var canvas = document.querySelector("#canvas")
+        var ctx = canvas.getContext("2d");
+
+        // arc() x y 半径 开始角度 结束角度
+        let pi = Math.PI
+
+        function time() {
+            ctx.arc(250, 250, 200, 0, 2 * pi)
+            ctx.lineWidth = 1
+            ctx.stroke()
+            for (let i = 0; i < 60; i++) {
+                ctx.beginPath();
+                ctx.moveTo(250, 250)
+                ctx.arc(250, 250, 200, i * pi / 30, i * pi / 30)
+                ctx.closePath()
+                ctx.stroke()
+            }
+            // ctx.beginPath();
+            // ctx.moveTo(250,250)
+            ctx.fillStyle = "white"
+            ctx.arc(250, 250, 200 * 0.95, 0, 2 * pi)
+            ctx.fill()
+            for (let i = 0; i < 12; i++) {
+                ctx.beginPath();
+                ctx.moveTo(250, 250)
+                ctx.arc(250, 250, 200, i * pi / 6, i * pi / 6)
+                ctx.lineWidth = 2
+                ctx.closePath()
+                ctx.stroke()
+            }
+            ctx.fillStyle = "white"
+            ctx.arc(250, 250, 200 * 0.92, 0, 2 * pi)
+            ctx.fill()
+
+            let time = new Date()
+            let h = time.getHours()
+            let m = time.getMinutes()
+            let s = time.getSeconds()
+
+            //时
+            ctx.beginPath();
+            ctx.moveTo(250, 250)
+            ctx.arc(250, 250, 200 * 0.65, (h * 30 - 90 + m / 2) * pi / 180, (h * 30 - 90 + m / 2) * pi / 180)
+            ctx.lineWidth = 4
+            ctx.closePath()
+            ctx.stroke()
+
+            //分
+            ctx.beginPath();
+            ctx.moveTo(250, 250)
+            ctx.arc(250, 250, 200 * 0.75, (m * 6 - 90 + s / 10) * pi / 180, (m * 6 - 90 + s / 10) * pi / 180)
+            ctx.lineWidth = 3
+            ctx.closePath()
+            ctx.stroke()
+
+            //秒
+            ctx.beginPath();
+            ctx.moveTo(250, 250)
+            ctx.arc(250, 250, 200 * 0.85, (s * 6 - 90) * pi / 180, (s * 6 - 90) * pi / 180)
+            ctx.lineWidth = 2
+            ctx.closePath()
+            ctx.stroke()
+        }
+        time()
+        setInterval(time, 1000)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #canvas {
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500">
+        对不起,您的浏览器不支持canvas
+        请尝试升级浏览器
+    </canvas>
+    <script>
+        //js操作canvas
+        var canvas = document.querySelector("#canvas")
+        var ctx = canvas.getContext("2d");
+
+        //绘制矩形 x,y,w,h
+        ctx.rect(20,0,100,100);
+        ctx.fillStyle = "green"
+        ctx.fill()
+
+        //绘制填充的矩形
+        ctx.fillStyle = "green"
+        ctx.fillRect(303,300,50,50)
+
+        //绘制只有边框的矩形
+        ctx.strokeRect(100,100,100,100)
+        ctx.strokeStyle = "pink"
+        ctx.lineWidth = 10
+
+        //边框和填充同时有
+        ctx.rect(20,0,100,100);
+        ctx.fillStyle = "green"
+        ctx.fill()
+        ctx.strokeRect(100,100,100,100)
+        ctx.strokeStyle = "pink"
+        ctx.lineWidth = 10
+        ctx.stroke()
+    </script>
+</body>
+</html>

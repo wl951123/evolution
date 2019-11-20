@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #canvas {
+            background-color:rgb(173, 138, 206);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500">
+        对不起,您的浏览器不支持canvas
+        请尝试升级浏览器
+    </canvas>
+    <script>
+        //js操作canvas
+        var canvas = document.querySelector("#canvas")
+        var ctx = canvas.getContext("2d");
+
+        // moveTo() x,y 绘制的开始坐标点
+        ctx.moveTo(100,100);
+        ctx.lineTo(300,300);
+        ctx.lineTo(300,100);
+        ctx.closePath();
+        //绘制
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+        ctx.fillStyle= "rgb(194, 26, 166)";
+        ctx.fill();
+    </script>
+</body>
+</html>
