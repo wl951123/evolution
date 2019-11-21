@@ -90,17 +90,23 @@
         },
         methods: {
             addData() {
-                this.creatCar.push({
-                    id: this.creatCar.length?(this.creatCar[this.creatCar.length - 1].id + 1):1,
-                    name: this.name,
-                    desc: this.desc,
-                    date: new Date().toLocaleString()
-                })
+                if (this.name.trim() && this.desc.trim()) {
+                    this.creatCar.push({
+                        id: this.creatCar.length + 1,
+                        name: this.name,
+                        desc: this.desc,
+                        date: new Date().toLocaleString()
+                    })
+                } else {
+                    alert("请输入正确的名称与描述")
+                }
+                this.name = ""
+                this.desc = ""
             },
             removeData(idex) {
                 for (let i = 0; i < this.creatCar.length; i++)
-                    if(this.creatCar[i].id == idex){
-                        this.creatCar.splice(i,1)
+                    if (this.creatCar[i].id == idex) {
+                        this.creatCar.splice(i, 1)
                     }
             }
         }

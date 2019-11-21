@@ -25,6 +25,7 @@
             },
             methods: {
                 fn1() {
+                    clearInterval(this.timer)
                     this.timer = setInterval(() => {
                         this.message = this.message.substring(1) + this.message[0]
                     }, 500)
