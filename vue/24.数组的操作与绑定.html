@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul li {
+            list-style: none;
+        }
+        #app {
+            background-color: blue;
+        }
+        #app li {
+            float: left;
+            width: 100px;
+            height: 100px;
+            border: 1px solid skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <ul v-for="item,i in arr">
+            <li :style="{backgroundColor:arr[i]}"></li>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message:'力拔山兮气盖世, 时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。',
+                // 操作数组 
+                // 由于javascript的特性 利用下标与数组长度来改变数组不会变为响应式的数据
+                // 如果想要操作数组的元素 使用 pop/push/shift/unshift/sort/reserve/splice
+                // 如果使用 filter/slice/concat 再进行复制
+                arr:["aliceblue","blueviolet","pink"]
+            }
+        })
+    </script>
+</body>
+</html>

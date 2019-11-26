@@ -50,6 +50,17 @@
             return arr
         }
         let arr1 = [1, 2, 4, 45, 1, 3, -1, 2, 9, 7, 1]
+
+        function mergerSort(arr){
+            if(arr.length<=1) return arr 
+            let len = arr.length;
+            let left = arr.slice(0,Number.parseInt(len/2));
+            let right = arr.slice(Number.parseInt(len/2));
+            let newArr = [];
+            while(mergerSort(left)[0]){
+                
+            }
+        }
         console.log(bubbleSort(arr1))
         console.log(quickSort(arr1))
         console.log(insertSort(arr1))

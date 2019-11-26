@@ -10,15 +10,15 @@
 
 <body>
     <div id="app">
-        <input type="text" v-model="n2">+<input type="text" v-model="n1">=<span>{{+n1+(+n2)}}</span>
+        <input type="text" v-model="n1">+<input type="text" v-model="n2">=<input type="text" :value="+n1 + +n2">
     </div>
     <script src="vue.js"></script>
     <script>
         let vm = new Vue({
-            el: "#app",
+            el: '#app',
             data: {
-                n1: "",
-                n2: ""
+                n1:"",
+                n2:""
             }
         })
     </script>

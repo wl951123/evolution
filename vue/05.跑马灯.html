@@ -11,16 +11,15 @@
 <body>
     <div id="app">
         <p>{{message}}</p>
-        <p v-text="message"></p>
-        <button @click="fn1">点击</button>
-        <button @click="fn2">点击</button>
+        <button v-on:click="fn1">开始</button>
+        <button @click="fn2">暂停</button>
     </div>
     <script src="vue.js"></script>
     <script>
         let vm = new Vue({
-            el: "#app",
+            el: '#app',
             data: {
-                message: "玫瑰，十年不见，还是这么漂亮！",
+                message: '力拔山兮气盖世,时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。',
                 timer: null
             },
             methods: {
@@ -28,13 +27,14 @@
                     clearInterval(this.timer)
                     this.timer = setInterval(() => {
                         this.message = this.message.substring(1) + this.message[0]
-                    }, 500)
+                    }, 1000)
                 },
-                fn2(){
+                fn2() {
                     clearInterval(this.timer)
                 }
             }
         })
+
     </script>
 </body>
 

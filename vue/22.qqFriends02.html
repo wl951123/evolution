@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            width: 384px;
+            height: 707px;
+            background: url('imgs/bg1.png') no-repeat;
+            margin: 0 auto;
+            user-select: none;
+        }
+
+        .list {
+            padding-top: 70px;
+            margin-left: 35px;
+            margin-right: 55px;
+            line-height: 35px;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            height: 50px;
+            line-height: 50px;
+            cursor: pointer;
+        }
+
+        h3,
+        li {
+            font-weight: normal;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 16px;
+            text-indent: 30px;
+            position: relative;
+        }
+
+        li {
+            height: 35px;
+        }
+
+        h3::before {
+            display: block;
+            float: left;
+            width: 0;
+            height: 0;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 7px solid white;
+            border-right: 7px solid transparent;
+            position: absolute;
+            content: "";
+            top: 17px;
+            left: 10px;
+        }
+
+        .active {
+            background-color: rgba(255, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="list">
+            <ul v-for="item in qqData" :key="item.id">
+                <h3 v-on:click="fn(item.id)" :style="{'background-color':item.flag?'rgba(255, 0, 0, 0.5)':'transparent'}">{{item.title}}</h3>
+                <li v-show="item.flag" v-for="itemL in item.list">{{itemL.subTitle}}</li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    let qqData = [{
+        title: '我的好友',
+        id: 1,
+        flag: false,
+        list: [{
+            subTitle: '小花'
+        }, {
+            subTitle: '小梅'
+        }, {
+            subTitle: '小红'
+        }]
+    }, {
+        title: '我的同事',
+        id: 2,
+        flag: false,
+        list: [{
+            subTitle: '小美'
+        }, {
+            subTitle: '美女'
+        }, {
+            subTitle: '姑娘'
+        }]
+    }]
+    let vm = new Vue({
+        el: ".wrap",
+        data: {
+            qqData
+        },
+        methods: {
+            fn(idx) {
+                let index = this.qqData.findIndex(item => item.id == idx);
+                this.qqData[index].flag = !this.qqData[index].flag
+            }
+        }
+    })
+</script>
+
+</html>

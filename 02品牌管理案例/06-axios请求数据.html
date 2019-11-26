@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>品牌管理</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 50px;
+            width: 850px;
+        }
+        
+        .container .form-inline {
+            margin-bottom: 20px;
+        }
+        
+        .table.table-bordered th,
+        .table.table-bordered td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <label>名称</label>
+                <input type="text" class="form-control" v-model="name">
+            </div>
+            <div class="form-group">
+                <label>描述</label>
+                <input type="text" class="form-control" v-model="desc" @keyup.enter.exact="addData">
+            </div>
+            <button type="button" class="btn btn-primary" @click="addData">添加</button>
+        </form>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="10%">序号</th>
+                    <th width="20%">名称</th>
+                    <th width="30%">描述</th>
+                    <th width="30%">创建时间</th>
+                    <th width="10%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr v-if="carData.length==0">
+                    <td colspan="5">请您添加一些留言吧～</td>
+                </tr>
+                <tr :style="{backgroundColor: i%2==0?'#f1f1f1':'white'}" v-else v-for="item,i in carData" :key="item.id">
+                    <td>{{i+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.desc}}</td>
+                    <td>{{item.date | timeFilter }}</td>
+                    <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+<!-- 第一步 先引入vuejs文件 -->
+<script src="vue.js"></script>
+<!-- 日期时间的插件 可以用来设置获取 格式化日期时间的 -->
+<script src="./node_modules/moment/moment.js"></script>
+<script src="./node_modules/axios/dist/axios.js"></script>
+<script>
+    // 定义一个全局过滤器
+    Vue.filter('timeFilter', (input, yourFormat = 'YYYY年MM月DD日 HH:mm:ss') => {
+        return moment(input).format(yourFormat)
+    })
+
+    // axios全局默认配置
+    axios.defaults.baseURL = 'http://localhost:5000';
+
+    // 第二步创建vue实例
+    let vm = new Vue({
+        el: ".container",
+        data: {
+            name: "",
+            desc: "",
+            carData: []
+        },
+        created() {
+            // 获取所有的商品
+            this.getAllList()
+        },
+        methods: {
+            getAllList() {
+                axios.get('/getBrandList')
+                    .then(res => {
+                        console.log(res);
+                        this.carData = res.data.list
+                    }).catch(err => {
+                        console.log(err);
+
+                    })
+            },
+            addData() {
+                // 为空校验
+                if ((!this.name.trim()) || (!this.desc.trim())) return alert("请填写完成数据");
+
+                // 添加数据
+                // this.carData.push({
+                //     id: this.carData.length + 1,
+                //     name: this.name,
+                //     desc: this.desc,
+                //     date: new Date().getTime()
+                // });
+                // 向后端发起请求 添加品牌
+                axios.post('addBrand', {
+                    name: this.name,
+                    desc: this.desc,
+                    time: new Date()
+                }).then(res => {
+                    console.log(res);
+                    this.getAllList();
+                })
+
+
+                this.name = '';
+                this.desc = '';
+            },
+            del(id) {
+                // 根据当前的项的id来删除这一条数据
+                // find  findIndex
+                // fetch 原生的api  
+                axios.get('/deleteBrand')
+                    .then(res => {
+                        console.log(res);
+                        this.getAllList();
+                    })
+
+                // let idx = this.carData.findIndex((item) => item.id === id);
+                // this.carData.splice(idx, 1);
+            }
+        }
+    })
+</script>
+
+</html>

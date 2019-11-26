@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-on:keyup.enter.exact="fn">
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg:"等了十年,我原以为国家早把我忘了"
+            },
+            methods: {
+                fn(){
+                    event.target.value = this.msg
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

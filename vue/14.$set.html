@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{msg1}}</p>
+        <p>{{person.sex}}</p>
+        <p>{{person.num2}}</p>
+        <button @click="fn">按钮</button>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg1: "等了十年,我原以为国家早把我忘了",
+                person: {
+                    name: "123",
+                    num: 1,
+                    // num2: 4 + this.person.num2
+                }
+            },
+            methods: {
+                fn() {
+                    // this.$set(this.person,"sex","男")
+                    Vue.set(this.person, "sex", "男")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let str = "1234567890"
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        let len = str.length // len = 10
+        // 字符串的substring substr(不建议使用) slice  此三者均不改变原串
+
+        // substring 参数为indexStart indexEnd
+        // 1.如果 indexStart 等于 indexEnd，substring 返回一个空字符串。
+        // 2.如果省略 indexEnd，substring 提取字符一直到字符串末尾。
+        // 3.如果任一参数小于 0 或为 NaN，则被当作 0。
+        // 4.如果任一参数大于 stringName.length，则被当作 stringName.length。
+        // 5.如果 indexStart 大于 indexEnd，则 substring 的执行效果就像两个参数调换了一样
+        console.log(str.substring(1, 1)); // ""
+        console.log(str.substring(1)); // => str.substring(1,len)
+        console.log(str.substring("oo", 1)); // => str.substring(0,1)
+        console.log(str.substring(len + 5, 1)); // => str.substring(len,1) ==> str.substring(1,len)
+        console.log(str.substring(len + 5, "oo")); // => str.substring(len,0) ==> str.substring(0,len)
+        console.log("===================")
+        // substring 很包容 将不是数字类型转为0 将大于自身长度的数值转为自身长度 甚至前后逆序也能调换顺序来输出
+
+        // substr 参数为indexStart length(需要截取的长度)
+        // 1.如果 length 为 0 或负值，则 substr 返回一个空字符串。如果忽略 length，则 substr 提取字符，直到字符串末尾
+        // 2.如果 indexStart 为正值，且大于或等于字符串的长度，则 substr 返回一个空字符串。
+        // 3.如果 indexStart 为负值，则 substr 把它作为从字符串末尾开始的一个字符索引。
+        // 如果 indexStart 为负值且 abs(indexStart) 大于字符串的长度，则 substr 使用 0 作为开始提取的索引。注意负的 start 参数不被 Microsoft JScript 所支持。
+        console.log(str.substr(1, -1)); // ""
+        console.log(str.substr(1, 12)); //  =>str.substr(1,len)
+        console.log(str.substr(12, 2)); // ""
+        console.log(str.substr(12, -1)); // ""
+        console.log(str.substr(-2, 1)); // =>str.substr(len-2,1)
+        console.log(str.substr(-12, 5)); //  =>str.substr(0,5)
+        console.log("===================")
+
+        // slice 与 数组的slice类似 参数为 indexStart indexEnd 2个参数均为可选参数
+        // 数组的slice返回一个从原数组中浅拷贝的新数组  
+        // 1.如果indexStart为负数，则表示从原数组中的倒数第几个元素开始提取.
+        // 2.如果省略 indexStart，则 slice 从索引 0 开始。
+        // 3.如果 indexStart/indexEnd 为负值且 abs(indexStart)/abs(indexEnd) 大于字符串的长度，则 substr 使用 0 作为开始提取的索引。
+        // 4.如果 indexStart 大于原数组的长度，则会返回空数组。
+        // 5.如果 indexEnd 为负数， 则它表示在原数组中的倒数第几个元素结束抽取。
+        // 6.如果 indexEnd 被省略，则 slice 会一直提取到原数组末尾。
+        // 7.如果 indexEnd 大于数组的长度，slice 也会一直提取到原数组末尾
+        console.log(str.slice()); // ==> str
+        console.log(arr.slice()); // ==> arr
+        console.log(str.slice(-2, -3)); //  ==> str.slice(len-2,len-3) ==>""
+        console.log(arr.slice(-2, -3)); //  ==> arr.slice(len-2,len-3) ==>[]
+        console.log(str.slice(-2, -1)); //  ==> str.slice(len-2,len-1) 
+        console.log(arr.slice(-2, -1)); //  ==> arr.slice(len-2,len-1) 
+        console.log(str.slice(len + 1)); // ==>""
+        console.log(arr.slice(len + 1)); // ==>[]
+        console.log(str.slice(-30, 2)); // ==> str.slice(0,2)
+        console.log(arr.slice(-30, 2)); // ==> arr.slice(0,2)
+        console.log(str.slice(-30, -22)); // ==> ""
+        console.log(arr.slice(-30, -22)); // ==> []
+        console.log(str.slice(0, -12)); // ==> arr.slice(0,2)
+        console.log(arr.slice(0, -12)); // ==> arr.slice(0,2)
+
+    </script>
+</body>
+
+</html>

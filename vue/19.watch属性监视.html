@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "原来是你,怎么样,有没有被人跟踪",
+                person: {
+                    name: "阿漆",
+                    age: 34,
+                    job: "落魄落难的猪肉贩"
+                }
+            },
+            methods: {
+
+            },
+            filter: {
+
+            },
+            watch: {
+                // //简化版写法
+                // //参数一 新数据值
+                // //参数二 改变之前的值
+                // msg(val, oldVal) {
+                //     console.log("密令已改")
+                // },
+                // //完整版写法
+                // msg: {
+                //     handler(val) {
+
+                //     },
+                //     immediate: ture //打开页面立即执行一次
+                // }
+                //若是对象,需补全 deep为true
+
+                person:{
+                    handler(val,oldval){
+                    
+                    },
+                    //深度监控
+                    deep : true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

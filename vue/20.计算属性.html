@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="n1">+
+        <input type="text" v-model="n2">+
+        <input type="text" v-model="n3">=
+        <input type="text" v-model="n4">
+        <button v-on:click="fn1">三位一体</button>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                n1: "2",
+                n2: "3",
+                n3: "4"
+            },
+            methods: {
+                fn1() {
+                    this.n1++
+                },
+                fn2() {
+                    return +this.n1 + +this.n2 + +this.n3
+                }
+            },
+            //计算属性来于data中的属性 会动态变化 但是不要重名 会报错
+            //数据是依赖于缓存设计的 如果多次调用相同结果 它只会计算一次 然后缓存起来
+            //而方法会多次执行
+
+            //计算属性默认只有getter函数,没有setter函数
+            computed: {
+                n4: {
+                    get() {
+
+                    },
+                    set() {
+
+                    }
+                }
+            }
+        })
+
+        //watch 与 计算属性的区别
+        //1 计算属性是通过计算得来的,依赖于其他属性
+        //2 计算属性缓存
+        //3 应用一: 简化插值表达式的计算过程 应用二: 处理props或$emit的传值
+        //4 无法监测异步操作的数据变化 
+
+        //1.是观察的动作 可以监测某个数据的变化 (对象的属性需要用deep)
+        //2.无缓存,页面重新渲染也会执行
+    </script>
+</body>
+
+</html>

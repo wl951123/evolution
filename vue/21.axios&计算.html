@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .container {
+            margin-top: 50px;
+            width: 850px;
+        }
+
+        .container .form-inline {
+            margin-bottom: 20px;
+        }
+
+        .table.table-bordered th,
+        .table.table-bordered td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <list-top  @send="get" @adddata="add"></list-top>
+        <list-foot :tips="tips" :searchlist="searchlist" @sendid="del"></list-foot>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script src="../node_modules/moment/moment.js"></script>
+<script src="axios.js"></script>
+<script>
+    Vue.filter("timeFilter", (date, defaultFormat = "YYYY年MM月DD日 HH:mm:ss") => {
+        return moment(date).format(defaultFormat)
+    })
+    Vue.component('list-top', {
+        template: `<form class="form-inline">
+            <div class="form-group">
+                <label>名称</label>
+                <input type="text" class="form-control" v-model="name">
+            </div>
+            <div class="form-group">
+                <label>描述</label>
+                <input type="text" class="form-control" v-model="desc" v-on:keydown.enter.exact="add">
+            </div>
+            <button type="button" class="btn btn-primary" v-on:click="add">添加</button>
+            <div class="form-group" style="margin-left:40px">
+                <label>搜索</label>
+                <input type="text" class="form-control" v-model="searchKey">
+            </div>
+        </form>`,
+        data() {
+            return {
+                name:"",
+                desc:"",
+                searchKey:""
+            }
+        },
+        methods:{
+            add(){
+                this.$emit("adddata", this.name,this.desc)
+            }
+        },
+        watch:{
+            searchKey:{
+                handler(){
+                    this.$emit("send",this.searchKey)
+                },
+                immediate:true
+            }
+        }
+    })
+    Vue.component('list-foot', {
+        template: `<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="10%">序号</th>
+                    <th width="20%">名称</th>
+                    <th width="30%">描述</th>
+                    <th width="30%">创建时间</th>
+                    <th width="10%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="tips.length==0">
+                    <td colspan="5">当前没有信息</td>
+                </tr>
+                <tr else v-for="item,i in searchlist" :key="item.id"
+                    :style="{backgroundColor: i%2==0?'#f1f1f1':'white'}">
+                    <td>{{i+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.desc}}</td>
+                    <td>{{item.time | timeFilter}}</td>
+                    <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>`,
+        data() {
+            return {
+                
+            }
+        },
+        methods:{
+            del(ind){
+                this.$emit("sendid",ind)
+            }
+        },
+        props:{
+            searchlist:Array,
+            tips:Array
+        }
+    })
+    //全局配置
+    axios.defaults.baseURL = 'http://localhost:5000';
+    let vm = new Vue({
+        el: ".container",
+        data: {
+            name: "",
+            desc: "",
+            tips: [],
+            searchKey:""
+        },
+        created() {
+            this.getAllList()
+        },
+        methods: {
+            add(name,desc) {
+                if (name.trim() && desc.trim()) {
+                    //发起请求增加数据
+                    axios.post("/addBrand", {
+                        name,
+                        desc,
+                        time: new Date().getTime()
+                    }).then(() => {
+                        this.getAllList()
+                    })
+                } else {
+                    alert("请输入正确的名称与描述")
+                };
+                this.name = "";
+                this.desc = ""
+            },
+            del(idx) {
+                //发起请求删除数据
+                axios.get("/deleteBrand", {
+                    prama: {
+                        id: idx
+                    }
+                }).then(() => {
+                    this.getAllList()
+                })
+                //渲染
+            },
+            getAllList() {
+                axios.get("/getBrandList").then(res => {
+                    this.tips = res.data.list
+                })
+            },
+            get(aaa){
+                this.searchKey = aaa
+            }
+        },
+        computed: {
+            searchlist() {
+                return this.tips.filter(item => item.name.includes(this.searchKey))
+            }
+        }
+    })
+</script>
+
+</html>

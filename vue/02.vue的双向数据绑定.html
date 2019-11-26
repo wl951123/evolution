@@ -15,9 +15,10 @@
 
 <body>
     <div id="app">
-        <input type="text" v-model="name">
+        <input type="text" :value="name" @input="name=$event.target.value">
         <p>{{ new Date()}}</p>
         <p>{{time}}</p>
+        <p>{{name}}</p>
         <img src="./Get-Jinxed-Jinx-1.jpg" :title="tips">
     </div>
     <script src="vue.js"></script>
@@ -32,6 +33,7 @@
                 time: new Date().toLocaleString()
             }
         })
+
     </script>
 </body>
 

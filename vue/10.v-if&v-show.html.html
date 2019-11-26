@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 500px;
+            height: 500px;
+            background-color: blueviolet;
+        }
+        #app>div:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background-color: burlywood;
+        }
+        #app>div:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-if 会重建dom 频繁切换会有较高的渲染开销 -->
+        <div v-if="false">hezi</div>
+        <div v-else>123</div>
+        
+        <p v-show="false">玫瑰</p>
+        <p v-show="true">你这是什么刀</p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

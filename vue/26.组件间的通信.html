@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <parent></parent>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // props 接收数据 父组件传递到子组件中 子组件通过props来接收
+        // 单向数据流 父==>子
+
+        // $emit 主动触发一个自定义事件 
+
+        Vue.component("parent", {
+            template: `
+            <div>
+                <h3>李香兰</h3>
+                <p>你的马子{{sonGirlfriends}}跟我跑了</p>
+                <son :car="car" :house="house" @getgirl="fn"></son>
+            </div>
+            `,
+            data() {
+                return {
+                    car: "兰博基尼",
+                    house: "万达",
+                    sonGirlfriends:""
+                }
+            },
+            methods:{
+                fn(m){
+                    this.sonGirlfriends = m
+                }
+            }
+        })
+        Vue.component("son", {
+            template: `
+            <div>
+                <h3>{{car}}</h3>
+                <p>This is my house {{house}}</p>
+            </div>
+            `,
+            data() {
+                return {
+                    money: "from parent",
+                    girlfriends: "李香琴"
+                }
+            },
+            methods:{
+
+            },
+            mounted(){
+                this.$emit("getgirl", this.girlfriends)
+            },
+            props: ["car", "house"]
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message:'力拔山兮气盖世, 时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。'
+            }
+        })
+    </script>
+</body>
+
+</html>

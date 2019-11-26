@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <login></login>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // 模块化 一个js/多个js文件的集合 从逻辑层面上划分的
+
+        // 组件化 从视觉层面上划分的 可以把一个完整的页面进行划分 划分成一个个的小的组件
+        // 组件内部合一嵌套组件 从功能上划分
+        // 容易复用和维护
+
+        // 组件定义分为全局组件(所有的vue实例) 和局部组件(当前vue实例)
+        // 组件就是一个特殊的Vue实例 
+        // 参数一: 组件名字 参数二 配置选项:可以写vue实例能写的所有选项,除了el
+        // 组件的配置中要有一个属性template(html结构)
+        Vue.component("login", {
+            template:`<div @click="fn">桃花坞里桃花庵,桃花庵下桃花仙</div>`,
+            methods:{
+                fn(){
+                    console.log(123)
+                }
+            }
+        })
+        
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message:'力拔山兮气盖世, 时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。'
+            }
+        })
+    </script>
+</body>
+</html>

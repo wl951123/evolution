@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app>div {
+            width: 200px;
+            height: 200px;
+            font-size: 20px;
+            text-align: center;
+            line-height:30px;
+            border: 1px solid black
+        }
+
+        #app>input.active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" v-for="item,i in tips" :key="item.tittleId" :value="item.title" :class="{active: i===index}"
+            @click="fn(i)">
+        <div v-for="item,i in tips" :key="item.contentId" v-show="i===index" v-text="item.content"></div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                index: 0,
+                tips: [{
+                        tittleId: 1,
+                        contentId: 010,
+                        title: "杜鹃",
+                        content: "玫瑰,十年不见,你还是那么漂亮!"
+                    },
+                    {
+                        tittleId: 2,
+                        contentId: 020,
+                        title: "香兰",
+                        content: "飞刀?"
+                    },
+                    {
+                        tittleId: 3,
+                        contentId: 030,
+                        title: "司令",
+                        content: "你这是什么刀"
+                    }
+                ]
+            },
+            methods: {
+                fn(idx) {
+                    this.index = idx
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

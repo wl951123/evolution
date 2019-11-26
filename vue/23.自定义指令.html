@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="vue.js"></script>
+    <script>
+        // v-html v-text v-if/v-else-if/v-else v-pre v-once v-bind v-model v-on
+        // 注册
+        Vue.directive('my-directive', {
+            // 钩子函数 只会执行一次 当指令绑定到当前元素上会触发
+            //每个狗子函数都接受一个参数 当前绑定指令的元素
+            bind: function (ele,binding) {},
+            //当前元素被插入到父节点中触发
+            inserted: function () {},
+            
+            update: function (ele,binding) {},
+            componentUpdated: function () {},
+            unbind: function () {}
+        })
+
+        // 注册 (指令函数)
+        Vue.directive('my-directive', function () {
+            // 这里将会被 `bind` 和 `update` 调用
+        })
+
+        // getter，返回已注册的指令
+        var myDirective = Vue.directive('my-directive')
+    </script>
+</body>
+
+</html>

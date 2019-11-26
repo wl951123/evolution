@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #app>div {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid black;
+            margin: 50px auto;
+            text-align: center;
+            line-height: 100px;
+            background-color: black;
+            color:red
+        }
+
+        #app>div.active {
+            background: chartreuse;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <light></light>
+        <onoff></onoff>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let eventBus = new Vue();
+        Vue.component('light', {
+            template: `<div :class="{active:flag}"> 日出东方 </div>`,
+            data() {
+                return {
+                    flag:false
+                }
+            },
+            mounted(){
+                eventBus.$on("turn",(i)=>{
+                    this.flag = i
+                })
+            }
+        })
+        Vue.component('onoff', {
+            template: `<asside>
+            <input type="button" value="开灯" @click="flag=true">
+            <input type="button" value="关灯" @click="flag=false">
+        </asside>`,
+            data() {
+                return {
+                    flag:false
+                }
+            },
+            watch:{
+                flag(){
+                    eventBus.$emit("turn",this.flag)
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message: '力拔山兮气盖世, 时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。'
+            }
+        })
+    </script>
+</body>
+
+</html>

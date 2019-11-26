@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .container {
+            margin-top: 50px;
+            width: 850px;
+        }
+
+        .container .form-inline {
+            margin-bottom: 20px;
+        }
+
+        .table.table-bordered th,
+        .table.table-bordered td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <list-search @getdata="addData"></list-search>
+        <list-form :creatcar="creatcar" @remove="removeData"></list-form>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script src="axios.js"></script>
+<script src="../node_modules/moment/moment.js"></script>
+<script>
+    Vue.component("list-search", {
+        template: `<form class="form-inline">
+            <div class="form-group">
+                <label>名称</label>
+                <input type="text" class="form-control" v-model="name">
+            </div>
+            <div class="form-group">
+                <label>描述</label>
+                <input type="text" class="form-control" v-model="desc">
+            </div>
+            <button type="button" class="btn btn-primary" @click="addData">添加</button>
+            <div class="form-group" style="margin-left:40px">
+                <label>搜索</label>
+                <input type="text" class="form-control" v-model="seachKey">
+            </div>
+        </form>`,
+        data() {
+            return {
+                name: '',
+                desc: '',
+                searcKey: ""
+            }
+        },
+        methods: {
+            addData() {
+                this.$emit("getdata", this.name, this.desc);
+                this.name = "";
+                this.desc = ""
+            }
+        }
+
+    })
+    Vue.component("list-form", {
+        template: `<table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th width="10%">序号</th>
+                    <th width="20%">名称</th>
+                    <th width="30%">描述</th>
+                    <th width="30%">创建时间</th>
+                    <th width="10%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item,i in creatcar" :key="item.id">
+                    <td>{{i+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.desc}}</td>
+                    <td>{{item.date | timeFilter}}</td>
+                    <td><a href="#" v-on:click.prevent="removeData(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>`,
+        methods: {
+            removeData(index) {
+                this.$emit("remove", index)
+            }
+        },
+        props: {
+            searchcar: Array,
+            creatcar: Array
+        }
+    })
+    Vue.filter("timeFilter", (time, defaultFormat = "YYYY年MM月DD日 HH:mm:ss") => {
+        return moment(time).format(defaultFormat)
+    });
+    axios.defaults.baseURL = "http://localhost:5000";
+    let vm = new Vue({
+        el: ".container",
+        data: {
+            creatcar: [{
+                    id: 1,
+                    name: "小哥",
+                    desc: "污妖王",
+                    date: new Date().getTime()
+                },
+                {
+                    id: 2,
+                    name: "小放牛",
+                    desc: "三月里来~桃花儿红~~杏花儿白~~水仙花儿开",
+                    date: new Date().getTime()
+                },
+                {
+                    id: 3,
+                    name: "疯牛症",
+                    desc: "跟我有什么关系啦,我是一只袋鼠",
+                    date: new Date().getTime()
+                }
+            ],
+            searchcar: []
+        },
+        methods: {
+            addData(name, desc) {
+                if (name.trim() && desc.trim()) {
+                    this.creatcar.push({
+                        id: this.creatcar.length + 1,
+                        name,
+                        desc,
+                        date: new Date().getTime()
+                    })
+                } else {
+                    alert("请输入正确的名称与描述")
+                }
+            },
+            removeData(idex) {
+                for (let i = 0; i < this.creatcar.length; i++)
+                    if (this.creatcar[i].id == idex) {
+                        this.creatcar.splice(i, 1)
+                    }
+            },
+            getList() {
+                axios.get("/getBrandList").then(res => {
+                    this.creatcar = res.data.list
+                })
+            }
+        },
+        created() {
+            this.getList()
+        }
+
+    })
+</script>
+
+</html>

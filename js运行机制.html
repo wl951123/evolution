@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const array1 = ['a', 'b', 'c'];
+
+        const iterator1 = array1.entries();
+        // console.log(iterator1)
+        // for(let i of iterator1){
+        //     console.log(i)
+        // }
+        console.log(iterator1.next().value);
+        // expected output: Array [0, "a"]
+        console.log(iterator1)
+        console.log(iterator1.next().value);
+        // expected output: Array [1, "b"]
+        console.log(iterator1)
+        console.log(iterator1.next().value);
+        // expected output: Array [2, "c"]
+        console.log(iterator1)
+        
+    </script>
+</body>
+
+</html>

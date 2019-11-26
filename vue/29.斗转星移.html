@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .transfer {
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .transfer-list {
+            display: inline-block;
+            width: 280px;
+            height: 210px;
+            font-size: 12px;
+            vertical-align: middle;
+            position: relative;
+            padding-top: 35px;
+        }
+
+        .transfer-header {
+            box-sizing: border-box;
+            padding: 8px 16px;
+            background: #f9fafc;
+            color: #495060;
+            border: 1px solid #dddee1;
+            border-bottom: 1px solid #e9eaec;
+            border-radius: 6px 6px 0 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .transfer-header-title {
+            padding-left: 4px;
+        }
+
+        .transfer-header-count {
+            float: right;
+            margin-right: 4px;
+        }
+
+        .transfer-list-body {
+            height: 100%;
+            border: 1px solid #dddee1;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transfer-list-content {
+            height: 100%;
+            padding: 4px 0;
+            overflow: auto;
+        }
+
+        .transfer-list-content-item {
+            margin: 0;
+            line-height: normal;
+            padding: 7px 16px;
+            clear: both;
+            color: #495060;
+            white-space: nowrap;
+            list-style: none;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .transfer-operation {
+            display: inline-block;
+            overflow: hidden;
+            margin: 0 16px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="transfer" id="app">
+        <list :list="list.originData" :listname="listname[0]"></list>
+        <div class="transfer-operation">
+            <p><input type="button" value="<" :disabled="result2" @click="fn2"></p>
+            <p><input type="button" value=">" :disabled="result1" @click="fn1"></p>
+        </div>
+        <list :list="list.targetData" :listname="listname[1]"></list>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let data = {
+            originData: [ // 源列表
+                {
+                    id: 1000,
+                    title: 'js课程',
+                    checked: false
+                }, {
+                    id: 1101,
+                    title: 'css课程',
+                    checked: false
+                }, {
+                    id: 1002,
+                    title: 'vue课程',
+                    checked: false
+                }, {
+                    id: 1103,
+                    title: 'react课程',
+                    checked: true
+                },
+            ],
+            targetData: [ // 目标列表
+                {
+                    id: 105660,
+                    title: 'Node课程',
+                    checked: true
+                }, {
+                    id: 11088881,
+                    title: 'canvas课程',
+                    checked: true
+                },
+            ]
+        }
+
+        Vue.component('list', {
+            template: `
+            <div class="transfer-list">
+            <div class="transfer-header">
+                <input type="checkbox" name="" :checked="list.length&&list.filter(item=>item.checked).length==list.length" @click="toggle">
+                <span class="transfer-header-title">
+                    {{listname}}
+                </span>
+                <span class="transfer-header-count">
+                    {{result}}
+                </span>
+            </div>
+
+            <div class="transfer-list-body">
+                <ul class="transfer-list-content">
+                    <li class="transfer-list-content-item" v-for="item in list" :key="item.id">
+                        <input type="checkbox" name="" v-model="item.checked">
+                        <span>{{item.title}}</span>
+                    </li>
+                </ul>
+            </div>
+            </div>`,
+            computed: {
+                result() {
+                    return this.list.filter(item => item.checked).length + "/" + this.list.length
+                }
+            },
+            methods: {
+                toggle() {
+                    this.list.forEach((item) => {
+                        item.checked = event.target.checked
+                    })
+                }
+            },
+            props: {
+                list: Array,
+                listname: String
+            }
+        });
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message: '力拔山兮气盖世, 时不利兮骓不逝。骓不逝兮可奈何，虞兮虞兮奈若何。',
+                list: data,
+                listname: ["原列表", "目标列表"]
+            },
+            methods: {
+                fn1() {
+                    let arr = Array.from(this.list.originData);
+                    arr.forEach(item => {
+                        if (item.checked == true) {
+                            item.checked = false;
+                            this.list.targetData.push(...this.list.originData.splice(this.list
+                                .originData.indexOf(item), 1))
+                        }
+                    })
+                },
+                fn2() {
+                    let arr = Array.from(this.list.targetData);
+                    arr.forEach(item => {
+                        if (item.checked == true) {
+                            item.checked = false;
+                            this.list.originData.push(...this.list.targetData.splice(this.list
+                                .targetData.indexOf(item), 1))
+                        }
+                    })
+                }
+            },
+            computed: {
+                result1() {
+                    return this.list.originData.every(item => !item.checked)
+                },
+                result2() {
+                    return this.list.targetData.every(item => !item.checked)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
